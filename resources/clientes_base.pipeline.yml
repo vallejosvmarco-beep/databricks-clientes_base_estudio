@@ -1,0 +1,17 @@
+resources:
+  pipelines:
+    clientes_base:
+      name: clientes_base
+
+      # Lee las tablas clientes_base_bronce_* (escritas por la tarea de ingesta del job)
+      # y publica clientes_base_plata_clientes en el mismo esquema.
+      catalog: ${var.catalog}
+      schema: ${var.schema}
+
+      root_path: ../src/clientes_base
+      serverless: true
+      continuous: false
+
+      libraries:
+        - file:
+            path: ../src/clientes_base/plata/clientes_base_plata_clientes.sql

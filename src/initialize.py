@@ -1,7 +1,8 @@
 # Databricks notebook source
-# Configure catalog and project name before running.
-CATALOG = 'workspace'
-PROJECT = 'project_base'
+# DBTITLE 1,Inicializar clientes_base
+# Inicializa esquemas y volumenes de clientes_base.
+CATALOG = 'datosami'
+PROJECT = 'clientes_base'
 import re
 for value in (CATALOG, PROJECT):
     if not re.fullmatch(r'[A-Za-z_][A-Za-z0-9_]*', value):

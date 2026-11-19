@@ -1,10 +1,6 @@
--- Replace placeholders using the deployment script before running this SQL.
--- This file is a reference SQL template; use src/initialize.py in a notebook
--- if SQL task variable substitution is unavailable.
-CREATE SCHEMA IF NOT EXISTS workspace.project_base;
-CREATE VOLUME IF NOT EXISTS workspace.project_base.landing;
-CREATE VOLUME IF NOT EXISTS workspace.project_base.metadata;
-CREATE VOLUME IF NOT EXISTS workspace.project_base.sandbox;
-CREATE SCHEMA IF NOT EXISTS workspace.project_base_bronze;
-CREATE SCHEMA IF NOT EXISTS workspace.project_base_silver;
-CREATE SCHEMA IF NOT EXISTS workspace.project_base_gold;
+-- Inicializacion de clientes_base: solo verificacion.
+-- No se crean esquemas ni volumenes (sin permiso CREATE SCHEMA en datosami):
+-- las tablas clientes_base_* viven en datosami.datos y los DBF en el volumen
+-- existente datosami.datos.clientes_base (subcarpetas AAAA/MM).
+DESCRIBE SCHEMA datosami.datos;
+DESCRIBE VOLUME datosami.datos.clientes_base;

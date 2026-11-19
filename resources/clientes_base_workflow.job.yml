@@ -1,0 +1,34 @@
+resources:
+  jobs:
+    clientes_base_workflow:
+      name: clientes_base_Workflow
+      queue:
+        enabled: true
+
+      environments:
+        - environment_key: default
+          spec:
+            environment_version: "2"
+
+      tasks:
+        # ============================================================
+        # TAREA 1: DBF del volumen -> tablas clientes_base_bronce_* (incremental por manifiesto)
+        # ============================================================
+        - task_key: clientes_base_ingesta_bronce
+          environment_key: default
+          spark_python_task:
+            python_file: ../src/clientes_base/bronce/ingesta_dbf.py
+            parameters:
+              - ${var.catalog}
+              - ${var.schema}
+              - ${var.clientes_base_path}
+              - ${var.clientes_base_periodo}
+
+        # ============================================================
+        # TAREA 2: bronce -> clientes_base_plata_clientes (pipeline clientes_base)
+        # ============================================================
+        - task_key: clientes_base_plata
+          depends_on:
+            - task_key: clientes_base_ingesta_bronce
+          pipeline_task:
+            pipeline_id: ${resources.pipelines.clientes_base.id}
